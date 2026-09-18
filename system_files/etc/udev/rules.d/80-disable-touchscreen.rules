@@ -1,0 +1,4 @@
+# Disable touchscreen input by default (SancioOs)
+# ponytail: per-device match via ID_INPUT_TOUCHSCREEN, no hardware-specific
+# ids needed; if your touchscreen still registers, add ATTR{id/vendor} etc.
+SUBSYSTEM=="input", ENV{ID_INPUT_TOUCHSCREEN}=="1", ATTR{inhibited}="1"
