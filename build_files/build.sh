@@ -16,7 +16,7 @@ cp -avf "/ctx/system_files"/. /
 dnf5 install -y tmux \
   git htop fastfetch vim ripgrep fd nano \
   tailscale \
-  distrobox fuse-sshfs
+  distrobox fuse-sshfs evtest
 
 # Use a COPR Example:
 #
