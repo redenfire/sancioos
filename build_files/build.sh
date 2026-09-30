@@ -16,7 +16,18 @@ cp -avf "/ctx/system_files"/. /
 dnf5 install -y tmux \
   git htop fastfetch vim ripgrep fd nano \
   tailscale \
-  distrobox fuse-sshfs evtest
+  distrobox fuse-sshfs evtest \
+  plymouth-theme-charge \
+  kitty btop vlc gnome-tweaks timeshift
+
+dnf5 -y copr enable zed-industries/zed
+dnf5 install -y zed
+
+dnf5 -y copr enable librewolf/librewolf
+dnf5 install -y librewolf
+
+plymouth-set-default-theme charge
+dracut --regenerate-all --force
 
 # Use a COPR Example:
 #
