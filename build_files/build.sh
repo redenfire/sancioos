@@ -20,9 +20,6 @@ dnf5 install -y tmux \
   plymouth-theme-charge \
   kitty btop vlc gnome-tweaks timeshift
 
-dnf5 -y copr enable librewolf/librewolf
-dnf5 install -y librewolf
-
 plymouth-set-default-theme charge
 dracut --regenerate-all --force
 
