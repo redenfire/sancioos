@@ -15,7 +15,8 @@ cp -avf "/ctx/system_files"/. /
 # this installs a package from fedora repos
 dnf5 install -y tmux \
   git htop fastfetch vim ripgrep fd nano \
-  tailscale
+  tailscale \
+  distrobox fuse-sshfs
 
 # Use a COPR Example:
 #
