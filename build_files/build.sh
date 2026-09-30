@@ -14,7 +14,8 @@ cp -avf "/ctx/system_files"/. /
 
 # this installs a package from fedora repos
 dnf5 install -y tmux \
-  git htop fastfetch vim ripgrep fd nano
+  git htop fastfetch vim ripgrep fd nano \
+  tailscale
 
 # Use a COPR Example:
 #
@@ -26,3 +27,4 @@ dnf5 install -y tmux \
 #### Example for enabling a System Unit File
 
 systemctl enable podman.socket
+systemctl enable tailscaled.service
