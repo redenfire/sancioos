@@ -20,9 +20,6 @@ dnf5 install -y tmux \
   plymouth-theme-charge \
   kitty btop vlc gnome-tweaks timeshift
 
-dnf5 -y copr enable zed-industries/zed
-dnf5 install -y zed
-
 dnf5 -y copr enable librewolf/librewolf
 dnf5 install -y librewolf
 
