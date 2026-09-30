@@ -1,4 +1,9 @@
 # Disable touchscreen input by default (SancioOs)
-# ponytail: per-device match via ID_INPUT_TOUCHSCREEN, no hardware-specific
-# ids needed; if your touchscreen still registers, add ATTR{id/vendor} etc.
+# Generic: inhibit any libinput touchscreen device
 SUBSYSTEM=="input", ENV{ID_INPUT_TOUCHSCREEN}=="1", ATTR{inhibited}="1"
+
+# Device-specific hard-ignore (SYNA2393 touchscreen on SancioOs hardware).
+# ponytail: ATTR{name} (not "ATTRS") matches the device's USB name string.
+# LIBINPUT_IGNORE_DEVICE makes libinput skip the device entirely, unlike the
+# inhibited flag above which the session can re-evaluate.
+SUBSYSTEM=="input", KERNEL=="event*", ATTR{name}=="SYNA2393:00 06CB:19AC", ENV{LIBINPUT_IGNORE_DEVICE}="1"
