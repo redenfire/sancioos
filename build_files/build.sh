@@ -5,11 +5,15 @@ set -ouex pipefail
 # Copy the contents of system_files/ of the git repo to /
 cp -avf "/ctx/system_files"/. /
 
-# Rename the OS shown on screen (GRUB menu, Settings > About, fastfetch) to Sancio
+# Rename the OS shown on screen (GRUB menu, Settings > About, fastfetch) to SancioOs
 for f in /usr/lib/os-release /etc/os-release; do
   [ -f "$f" ] || continue
-  sed -i 's/^NAME=.*/NAME="Sancio"/; s/^PRETTY_NAME=.*/PRETTY_NAME="Sancio"/' "$f"
+  sed -i 's/^NAME=.*/NAME="SancioOs"/; s/^PRETTY_NAME=.*/PRETTY_NAME="SancioOs"/; s/^ID=.*/ID=sancioos/' "$f"
 done
+
+# Show "SancioOs" in the GRUB menu and regenerate its config
+echo 'GRUB_DISTRIBUTOR="SancioOs"' > /etc/default/grub
+grub2-mkconfig -o /boot/grub2/grub.cfg 2>/dev/null || true
 
 ### Install packages
 
@@ -28,6 +32,7 @@ dnf5 install -y tmux \
 
 plymouth-set-default-theme charge
 cp -f /ctx/penguin_head.png /usr/share/plymouth/themes/charge/watermark.png
+grep -q '^ImageDir=/usr/share/plymouth/themes/charge$' /usr/share/plymouth/themes/charge/charge.plymouth || echo "WARN: charge.plymouth ImageDir non punta a /usr/share/plymouth/themes/charge"
 dracut --regenerate-all --force
 
 ### GDM login screen customization
