@@ -5,6 +5,12 @@ set -ouex pipefail
 # Copy the contents of system_files/ of the git repo to /
 cp -avf "/ctx/system_files"/. /
 
+# Rename the OS shown on screen (GRUB menu, Settings > About, fastfetch) to Sancio
+for f in /usr/lib/os-release /etc/os-release; do
+  [ -f "$f" ] || continue
+  sed -i 's/^NAME=.*/NAME="Sancio"/; s/^PRETTY_NAME=.*/PRETTY_NAME="Sancio"/' "$f"
+done
+
 ### Install packages
 
 # Packages can be installed from any enabled yum repo on the image.
@@ -21,7 +27,25 @@ dnf5 install -y tmux \
   kitty btop vlc gnome-tweaks timeshift
 
 plymouth-set-default-theme charge
+cp -f /ctx/penguin_head.png /usr/share/plymouth/themes/charge/watermark.png
 dracut --regenerate-all --force
+
+### GDM login screen customization
+
+# Login logo (org.gnome.login-screen.logo)
+mkdir -p /etc/dconf/db/gdm.d
+cp -f /ctx/penguin_head.png /usr/share/pixmaps/penguin_head.png
+cp -f /ctx/gdm/01-logo /etc/dconf/db/gdm.d/01-logo
+
+# Login background via GNOME Shell extension
+cp -f /ctx/wallpaper.png /usr/share/backgrounds/wallpaper.png
+mkdir -p /usr/share/gnome-shell/extensions/gdm-wallpaper@sancioos
+cp -f /ctx/gdm-wallpaper-extension/extension.js /usr/share/gnome-shell/extensions/gdm-wallpaper@sancioos/
+cp -f /ctx/gdm-wallpaper-extension/metadata.json /usr/share/gnome-shell/extensions/gdm-wallpaper@sancioos/
+
+# Enable the extension for GDM
+sudo -u gdm dbus-launch gsettings set org.gnome.shell enabled-extensions "['gdm-wallpaper@sancioos']" || true
+dconf update
 
 # Use a COPR Example:
 #

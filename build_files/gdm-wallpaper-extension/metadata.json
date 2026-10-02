@@ -1,0 +1,6 @@
+{
+  "uuid": "gdm-wallpaper@sancioos",
+  "name": "GDM Wallpaper",
+  "description": "Imposta uno sfondo personalizzato per la schermata di login.",
+  "shell-version": ["45", "46", "47"]
+}
