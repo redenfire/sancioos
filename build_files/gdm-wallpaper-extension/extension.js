@@ -4,13 +4,12 @@ import St from 'gi://St';
 
 export default class GdmWallpaperExtension extends Extension {
     enable() {
-        const monitorManager = global.backend.get_monitor_manager();
-        const monitor = monitorManager.get_monitors()[0];
+        const monitor = global.display.get_monitor_geometry(global.display.get_primary_monitor());
         const background = new St.Widget({
             style_class: 'gdm-wallpaper',
             style: `background-image: url('file:///usr/share/backgrounds/wallpaper.png'); background-size: cover;`,
-            width: monitor.geometry.width,
-            height: monitor.geometry.height,
+            width: monitor.width,
+            height: monitor.height,
         });
         global.stage.add_child(background);
         this._background = background;
